@@ -8,7 +8,7 @@ module SolidusSubscriptions
   module Spree
     module Order
       module FinalizeCreatesSubscriptions
-        method_name = Spree::Order.instance_methods.include?(:finalize) ? :finalize : :finalize!
+        method_name = ::Spree.solidus_gem_version >= ::Gem::Version.new('3.2') ? :finalize : :finalize!
 
         define_method(method_name) do
           SolidusSubscriptions.configuration.subscription_generator_class.call(self)
